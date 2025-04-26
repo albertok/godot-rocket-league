@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://26d7swkp18du"]
+
+[ext_resource type="Script" uid="uid://ddst71w41ihgn" path="res://scripts/car_ai.gd" id="1_64sb6"]
+
+[node name="Car_AI" type="Node3D"]
+script = ExtResource("1_64sb6")

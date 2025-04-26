@@ -1,0 +1,58 @@
+[gd_scene load_steps=9 format=3 uid="uid://stkxyqefx03l"]
+
+[ext_resource type="Script" uid="uid://cgwxygf25ypdb" path="res://scripts/player.gd" id="1_benb6"]
+[ext_resource type="Script" uid="uid://svm55wkfe0fw" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_5abps"]
+[ext_resource type="Script" uid="uid://cbmc5r8tb2ub7" path="res://scripts/input.gd" id="3_bokmb"]
+[ext_resource type="Script" uid="uid://ccodj8qg1q5qa" path="res://addons/netfox/tick-interpolator.gd" id="4_e5kxk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gr2wk"]
+albedo_color = Color(0.189389, 0.212656, 0.78031, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nrvd0"]
+material = SubResource("StandardMaterial3D_gr2wk")
+size = Vector3(0.5, 0.5, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_dqkch"]
+size = Vector3(0.5, 0.5, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dqkch"]
+size = Vector3(1, 0.456177, 1)
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_benb6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_nrvd0")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.265293, 0)
+mesh = SubResource("PrismMesh_dqkch")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0264282, 0)
+shape = SubResource("BoxShape3D_dqkch")
+
+[node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("2_5abps")
+root = NodePath("..")
+state_properties = Array[String]([":global_transform", ":velocity"])
+input_properties = Array[String](["Input:motion"])
+
+[node name="Input" type="Node" parent="."]
+script = ExtResource("3_bokmb")
+
+[node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("4_e5kxk")
+root = NodePath("..")
+properties = Array[String]([":global_transform"])
+
+[node name="Label3D" type="Label3D" parent="."]
+visible = false
+billboard = 1
+shaded = true
+no_depth_test = true
+text = "Test
+"
+font_size = 60

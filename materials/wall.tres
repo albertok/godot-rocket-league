@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://uo7itoedkenq"]
+
+[ext_resource type="Texture2D" uid="uid://c5mr1vlj31pmx" path="res://materials/wall_albedo.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://cx2hrsvj4gts6" path="res://materials/wall_normal.png" id="3"]
+
+[resource]
+transparency = 1
+blend_mode = 1
+cull_mode = 2
+albedo_color = Color(1, 1, 1, 0.258824)
+albedo_texture = ExtResource("1")
+metallic_specular = 0.1
+roughness = 0.6
+normal_enabled = true
+normal_texture = ExtResource("3")
+clearcoat_enabled = true
+anisotropy = -0.66
+refraction_scale = 0.25
+uv1_triplanar = true

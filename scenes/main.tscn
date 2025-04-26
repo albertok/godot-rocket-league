@@ -1,0 +1,107 @@
+[gd_scene load_steps=11 format=3 uid="uid://deuo4hhrdtvai"]
+
+[ext_resource type="Script" uid="uid://c6j4p68pfwm0u" path="res://scripts/main.gd" id="1_tefeu"]
+[ext_resource type="Script" uid="uid://wr5ur5dqrkni" path="res://addons/netfox.extras/physics/godot_driver_3d.gd" id="2_tefeu"]
+[ext_resource type="PackedScene" uid="uid://dpm8cgj63eh0s" path="res://scenes/ball.tscn" id="3_tipki"]
+[ext_resource type="Script" uid="uid://bt0tpn5p32eym" path="res://scripts/ui_info.gd" id="4_85g3d"]
+[ext_resource type="PackedScene" uid="uid://u33v8symfbrp" path="res://scenes/field.tscn" id="5_choun"]
+[ext_resource type="PackedScene" uid="uid://bg5hxbj5ib07n" path="res://scenes/goal.tscn" id="6_o6xl0"]
+[ext_resource type="Script" uid="uid://btvo6f7sbrn0q" path="res://scripts/camera_3d.gd" id="6_ya4ey"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bmvr6"]
+sky_top_color = Color(0.509202, 0.628864, 1, 1)
+sky_horizon_color = Color(0.882353, 0.545098, 0.52549, 1)
+
+[sub_resource type="Sky" id="Sky_1bvp3"]
+sky_material = SubResource("ProceduralSkyMaterial_bmvr6")
+
+[sub_resource type="Environment" id="Environment_nnriw"]
+background_mode = 2
+sky = SubResource("Sky_1bvp3")
+tonemap_mode = 1
+glow_enabled = true
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_tefeu")
+
+[node name="PhysicsDriver3D" type="Node" parent="."]
+script = ExtResource("2_tefeu")
+metadata/_custom_type_script = ExtResource("2_tefeu")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_nnriw")
+
+[node name="Players" type="Node" parent="."]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://stkxyqefx03l", "uid://rbhb1te77y2d")
+spawn_path = NodePath("../Players")
+
+[node name="Ball" parent="." instance=ExtResource("3_tipki")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.04389, 2.38114, 0)
+disable_mode = 2
+collision_mask = 13
+input_ray_pickable = false
+mass = 0.5
+gravity_scale = 0.3
+continuous_cd = true
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 363.0
+offset_bottom = 363.0
+
+[node name="info" type="Label" parent="UI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Info
+"
+script = ExtResource("4_85g3d")
+
+[node name="field" parent="." instance=ExtResource("5_choun")]
+
+[node name="Goal1" parent="field" instance=ExtResource("6_o6xl0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.007, 3.217, -60.5)
+
+[node name="Goal2" parent="field" instance=ExtResource("6_o6xl0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.007, 3.217, 60.5)
+
+[node name="Lights" type="Node3D" parent="."]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.479, 18.3966, 40.9936)
+light_energy = 100.0
+omni_range = 33.2662
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.0646, 18.3966, 40.9936)
+light_energy = 100.0
+omni_range = 33.2662
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.479, 18.3966, -5.37348)
+light_energy = 100.0
+omni_range = 33.2662
+
+[node name="OmniLight3D4" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.0646, 18.3966, -5.37348)
+light_energy = 100.0
+omni_range = 33.2662
+
+[node name="OmniLight3D5" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.479, 18.3966, -42.5342)
+light_energy = 100.0
+omni_range = 33.2662
+
+[node name="OmniLight3D6" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.0646, 18.3966, -42.5342)
+light_energy = 100.0
+omni_range = 33.2662
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 49.8719, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+script = ExtResource("6_ya4ey")

@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cylxynmfbbjwk"]
+
+[ext_resource type="PackedScene" uid="uid://mwlmhv68da6e" path="res://models/car.blend" id="1_bg842"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ifs7h"]
+cull_mode = 2
+albedo_color = Color(0.913096, 0.098798, 0, 1)
+metallic = 0.75
+roughness = 0.2
+clearcoat_enabled = true
+
+[node name="car" instance=ExtResource("1_bg842")]
+
+[node name="Car" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_ifs7h")

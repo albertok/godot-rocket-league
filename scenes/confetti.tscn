@@ -1,0 +1,76 @@
+[gd_scene load_steps=14 format=3 uid="uid://ds50rqn0gl2jl"]
+
+[ext_resource type="Script" uid="uid://bxr4tbk4dq8v0" path="res://scripts/confetti.gd" id="1_xjk0n"]
+
+[sub_resource type="Curve" id="Curve_du648"]
+_data = [Vector2(0.0107817, 1), 0.0, 0.0, 0, 0, Vector2(0.762803, 0.801996), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_xjk0n"]
+curve = SubResource("Curve_du648")
+
+[sub_resource type="Gradient" id="Gradient_xejpt"]
+colors = PackedColorArray(0.779291, 0.779291, 0.779291, 0.329412, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2hbhx"]
+gradient = SubResource("Gradient_xejpt")
+
+[sub_resource type="Gradient" id="Gradient_e8opl"]
+offsets = PackedFloat32Array(0, 0.501449, 1)
+colors = PackedColorArray(1, 0, 0, 1, 0.38556, 0.57763, 1, 1, 1, 1, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_v30ou"]
+gradient = SubResource("Gradient_e8opl")
+
+[sub_resource type="Curve" id="Curve_k3xkt"]
+_data = [Vector2(0, 0.624475), 0.0, 0.0, 0, 0, Vector2(0.490566, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.63813), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_lnt6a"]
+curve = SubResource("Curve_k3xkt")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_du648"]
+particle_flag_align_y = true
+angle_min = -360.0
+angle_max = 360.0
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 5.0
+initial_velocity_max = 20.0
+linear_accel_min = 1.2
+linear_accel_max = 14.94
+color_ramp = SubResource("GradientTexture1D_v30ou")
+color_initial_ramp = SubResource("GradientTexture1D_2hbhx")
+alpha_curve = SubResource("CurveTexture_xjk0n")
+emission_curve = SubResource("CurveTexture_lnt6a")
+hue_variation_min = -0.12
+hue_variation_max = 0.14
+
+[sub_resource type="Curve" id="Curve_xjk0n"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xjk0n"]
+vertex_color_use_as_albedo = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 4.15
+emission_operator = 1
+billboard_keep_scale = true
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_xejpt"]
+material = SubResource("StandardMaterial3D_xjk0n")
+size = 0.1
+sections = 6
+curve = SubResource("Curve_xjk0n")
+
+[node name="Confetti" type="GPUParticles3D"]
+emitting = false
+amount = 300
+lifetime = 3.0
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_du648")
+draw_pass_1 = SubResource("RibbonTrailMesh_xejpt")
+script = ExtResource("1_xjk0n")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

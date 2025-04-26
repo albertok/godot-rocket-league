@@ -1,0 +1,41 @@
+[gd_scene load_steps=8 format=3 uid="uid://dpm8cgj63eh0s"]
+
+[ext_resource type="Script" uid="uid://c0s6il6j1o06a" path="res://scripts/ball.gd" id="1_cxlvu"]
+[ext_resource type="Script" uid="uid://3lbngqcexe0l" path="res://addons/netfox/state-synchronizer.gd" id="2_f7cbr"]
+[ext_resource type="Material" uid="uid://bp1lxtywe5u3c" path="res://materials/ball.tres" id="3_4dx81"]
+[ext_resource type="Script" uid="uid://dour8fehaaugp" path="res://addons/netfox/tick-interpolator.gd" id="3_f7cbr"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0xm2m"]
+bounce = 0.8
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_0xm2m"]
+radius = 1.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_0xm2m"]
+radius = 1.0
+height = 2.0
+
+[node name="Ball" type="RigidBody3D"]
+collision_layer = 4
+collision_mask = 5
+physics_material_override = SubResource("PhysicsMaterial_0xm2m")
+script = ExtResource("1_cxlvu")
+
+[node name="StateSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("2_f7cbr")
+root = NodePath("..")
+properties = Array[String]([":physics_state"])
+metadata/_custom_type_script = "uid://caeflfu4nve2h"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_0xm2m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_0xm2m")
+surface_material_override/0 = ExtResource("3_4dx81")
+
+[node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("3_f7cbr")
+root = NodePath("..")
+properties = Array[String]([":global_position"])
+metadata/_custom_type_script = ExtResource("3_f7cbr")

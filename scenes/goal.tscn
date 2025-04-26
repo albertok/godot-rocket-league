@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bg5hxbj5ib07n"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tefeu"]
+size = Vector3(15, 7, 1)
+
+[node name="Goal1" type="StaticBody3D"]
+collision_layer = 8
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_tefeu")
