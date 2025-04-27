@@ -11,15 +11,13 @@ func _ready():
 	contact_monitor = true
 	max_contacts_reported = 8
 	body_entered.connect(on_body_entered)
-	NetworkTime.on_tick.connect(_on_tick)
-	$StateSynchronizer.process_settings()
+	$RollbackSynchronizer.process_settings()
 
 func on_body_entered(body: Node) -> void:
 	if body.name.begins_with("Goal"):
 		entered_goal = true
 
-
-func _on_tick(_delta: float, _tick: int) -> void:
+func _physics_rollback_tick(_delta: float, _tick: int) -> void:
 	if entered_goal:
 		# Spawn confetti
 		var confetti_instance = confetti.instantiate()
