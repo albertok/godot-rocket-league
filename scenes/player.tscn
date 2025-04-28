@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://stkxyqefx03l"]
 
 [ext_resource type="Script" uid="uid://cgwxygf25ypdb" path="res://scripts/player.gd" id="1_benb6"]
-[ext_resource type="Script" uid="uid://svm55wkfe0fw" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_5abps"]
+[ext_resource type="Script" uid="uid://d350u8evihs1u" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_5abps"]
 [ext_resource type="Script" uid="uid://cbmc5r8tb2ub7" path="res://scripts/input.gd" id="3_bokmb"]
-[ext_resource type="Script" uid="uid://ccodj8qg1q5qa" path="res://addons/netfox/tick-interpolator.gd" id="4_e5kxk"]
+[ext_resource type="Script" uid="uid://dour8fehaaugp" path="res://addons/netfox/tick-interpolator.gd" id="4_e5kxk"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gr2wk"]
 albedo_color = Color(0.189389, 0.212656, 0.78031, 1)
