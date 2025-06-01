@@ -18,6 +18,7 @@ class_name PlayerRB
 
 var accel_input
 var steering_input
+var previous_spring_lengths: Array = [0.0, 0.0, 0.0, 0.0]
 
 @onready var inputs: PlayerInput = $Input
 @onready var rollback_synchronizer: RollbackSynchronizer = $RollbackSynchronizer
@@ -64,4 +65,6 @@ func _physics_rollback_tick(delta, _tick):
 
 	for i in range(4):
 		var wheel = $Wheels.get_child(i)
+		wheel.previous_spring_length = previous_spring_lengths[i]
 		wheel.wheel_tick(delta, _tick)
+		previous_spring_lengths[i] = wheel.previous_spring_length

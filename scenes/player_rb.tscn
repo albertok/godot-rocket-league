@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://rbhb1te77y2d"]
+[gd_scene load_steps=10 format=3 uid="uid://rbhb1te77y2d"]
 
 [ext_resource type="Script" uid="uid://lxgmbbyk3nvi" path="res://scripts/player_rb.gd" id="1_35slv"]
 [ext_resource type="Script" uid="uid://d350u8evihs1u" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_1k5lo"]
@@ -8,6 +8,10 @@
 [ext_resource type="Script" uid="uid://dour8fehaaugp" path="res://addons/netfox/tick-interpolator.gd" id="5_1k5lo"]
 [ext_resource type="PackedScene" uid="uid://26d7swkp18du" path="res://scenes/car_ai.tscn" id="7_athq8"]
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_athq8"]
+friction = 0.75
+bounce = 0.1
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_dqkch"]
 size = Vector3(1.5, 0.5, 3)
 
@@ -15,10 +19,15 @@ size = Vector3(1.5, 0.5, 3)
 collision_layer = 3
 collision_mask = 3
 mass = 20.0
+physics_material_override = SubResource("PhysicsMaterial_athq8")
 center_of_mass_mode = 1
 center_of_mass = Vector3(0, -0.6, 0)
+inertia = Vector3(0, 0, 100)
 continuous_cd = true
+linear_damp = 0.3
+angular_damp = 1.0
 script = ExtResource("1_35slv")
+spring_strength = 100.0
 engine_power = 200.0
 steering_angle = 25.0
 front_tire_grip = 1.5
@@ -34,7 +43,7 @@ shape = SubResource("BoxShape3D_dqkch")
 [node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
 script = ExtResource("2_1k5lo")
 root = NodePath("..")
-state_properties = Array[String]([":physics_state"])
+state_properties = Array[String]([":physics_state", ":previous_spring_lengths"])
 input_properties = Array[String](["Input:motion"])
 
 [node name="Input" type="Node" parent="."]
@@ -55,19 +64,23 @@ font_size = 60
 [node name="FL_Wheel" parent="Wheels" instance=ExtResource("4_1k5lo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.291376, 1)
 enabled = false
+hit_from_inside = true
 
 [node name="FR_Wheel" parent="Wheels" instance=ExtResource("4_1k5lo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.291376, 1)
 enabled = false
+hit_from_inside = true
 
 [node name="RL_Wheel" parent="Wheels" instance=ExtResource("4_1k5lo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.291376, -1)
 enabled = false
+hit_from_inside = true
 is_front_wheel = false
 
 [node name="RR_Wheel" parent="Wheels" instance=ExtResource("4_1k5lo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.291376, -1)
 enabled = false
+hit_from_inside = true
 is_front_wheel = false
 
 [node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
