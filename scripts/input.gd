@@ -4,6 +4,7 @@ class_name PlayerInput
 
 var ai_enabled: bool = false
 var ai_motion: Vector2 = Vector2()
+var jumping: bool = false
 
 @export
 var motion = Vector2():
@@ -16,3 +17,4 @@ func _gather():
 			motion = ai_motion
 		else:
 			motion = Input.get_vector("left", "right", "down", "up")
+			jumping = Input.is_action_pressed("jump")

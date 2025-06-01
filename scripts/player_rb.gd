@@ -7,14 +7,12 @@ class_name PlayerRB
 @export var spring_strength: float = 80.0
 @export var spring_damper: float = 10.0
 @export var wheel_radius: float = 0.33
-
 @export var debug: bool = false
 @export var engine_power: float
-
-
 @export var steering_angle: float = 30.0
 @export var front_tire_grip: float = 2.0
 @export var rear_tire_grip: float = 2.0
+@export var jump_force: float = 30.
 
 var accel_input
 var steering_input
@@ -63,8 +61,15 @@ func _physics_rollback_tick(delta, _tick):
 		fl_wheel.rotation.y = lerp(fl_wheel.rotation.y, 0.0, 0.2)
 		fr_wheel.rotation.y = lerp(fr_wheel.rotation.y, 0.0, 0.2)
 
+	var wheels_on_ground = 0
 	for i in range(4):
 		var wheel = $Wheels.get_child(i)
 		wheel.previous_spring_length = previous_spring_lengths[i]
 		wheel.wheel_tick(delta, _tick)
+		if wheel.is_colliding():
+			wheels_on_ground += 1
 		previous_spring_lengths[i] = wheel.previous_spring_length
+
+	if wheels_on_ground > 2 and inputs.jumping:
+		var vehicles_up = global_transform.basis.y
+		apply_impulse(jump_force * vehicles_up, -vehicles_up)

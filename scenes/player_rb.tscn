@@ -44,7 +44,7 @@ shape = SubResource("BoxShape3D_dqkch")
 script = ExtResource("2_1k5lo")
 root = NodePath("..")
 state_properties = Array[String]([":physics_state", ":previous_spring_lengths"])
-input_properties = Array[String](["Input:motion"])
+input_properties = Array[String](["Input:motion", "Input:jumping"])
 
 [node name="Input" type="Node" parent="."]
 script = ExtResource("3_3k3na")
