@@ -1,5 +1,5 @@
+@icon("res://addons/netfox.extras/icons/network-rigid-body-2d.svg")
 extends RigidBody2D
-
 class_name NetworkRigidBody2D
 
 ## A rollback / state synchronizer class for RigidBody2D.
@@ -13,7 +13,7 @@ var physics_state: Array:
 
 enum {
 	ORIGIN,
-	QUAT,
+	ROT,
 	LIN_VEL,
 	ANG_VEL,
 	SLEEPING
@@ -26,15 +26,14 @@ func _notification(notification: int):
 func get_state() -> Array:
 	var body_state: Array = [Vector3.ZERO, Quaternion.IDENTITY, Vector3.ZERO, Vector3.ZERO, false]
 	body_state[ORIGIN] = direct_state.transform.origin
-	body_state[QUAT] = direct_state.transform.basis.get_rotation_quaternion()
+	body_state[ROT] = direct_state.transform.get_rotation()
 	body_state[LIN_VEL] = direct_state.linear_velocity
 	body_state[ANG_VEL] = direct_state.angular_velocity
 	body_state[SLEEPING] = direct_state.sleeping
 	return body_state
 
 func set_state(remote_state: Array) -> void:
-	direct_state.transform.origin = remote_state[ORIGIN]
-	direct_state.transform.basis = Basis(remote_state[QUAT])
+	direct_state.transform = Transform2D(remote_state[ROT], remote_state[ORIGIN])
 	direct_state.linear_velocity = remote_state[LIN_VEL]
 	direct_state.angular_velocity = remote_state[ANG_VEL]
 	direct_state.sleeping = remote_state[SLEEPING]
