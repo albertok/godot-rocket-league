@@ -34,6 +34,7 @@ func _ready():
 	await get_tree().process_frame
 	rollback_synchronizer.process_settings()
 
+
 func focus_camera_on(cam_target):
 	if inputs.is_multiplayer_authority():
 		var camera = get_tree().get_root().get_camera_3d()
@@ -43,6 +44,7 @@ func _process(_delta: float) -> void:
 	$Label3D.text = "Speed: %.2f" % linear_velocity.length()
 	
 func _physics_rollback_tick(delta, _tick):
+	sleeping = false
 	accel_input = - inputs.motion.y
 	
 	steering_input = - inputs.motion.x

@@ -1,10 +1,10 @@
 [gd_scene load_steps=11 format=3 uid="uid://deuo4hhrdtvai"]
 
 [ext_resource type="Script" uid="uid://c6j4p68pfwm0u" path="res://scripts/main.gd" id="1_tefeu"]
-[ext_resource type="Script" uid="uid://wr5ur5dqrkni" path="res://addons/netfox.extras/physics/godot_driver_3d.gd" id="2_tefeu"]
+[ext_resource type="Script" path="res://addons/netfox.extras/physics/godot_driver_3d.gd" id="2_tefeu"]
 [ext_resource type="PackedScene" uid="uid://dpm8cgj63eh0s" path="res://scenes/ball.tscn" id="3_tipki"]
 [ext_resource type="Script" uid="uid://bt0tpn5p32eym" path="res://scripts/ui_info.gd" id="4_85g3d"]
-[ext_resource type="PackedScene" uid="uid://u33v8symfbrp" path="res://scenes/field.tscn" id="5_choun"]
+[ext_resource type="PackedScene" uid="uid://blu8uqh0vbrhi" path="res://models/field.glb" id="5_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://bg5hxbj5ib07n" path="res://scenes/goal.tscn" id="6_o6xl0"]
 [ext_resource type="Script" uid="uid://btvo6f7sbrn0q" path="res://scripts/camera_3d.gd" id="6_ya4ey"]
 
@@ -19,6 +19,7 @@ sky_material = SubResource("ProceduralSkyMaterial_bmvr6")
 background_mode = 2
 sky = SubResource("Sky_1bvp3")
 tonemap_mode = 1
+ssr_enabled = true
 glow_enabled = true
 
 [node name="World" type="Node3D"]
@@ -26,7 +27,7 @@ script = ExtResource("1_tefeu")
 
 [node name="PhysicsDriver3D" type="Node" parent="."]
 script = ExtResource("2_tefeu")
-metadata/_custom_type_script = ExtResource("2_tefeu")
+metadata/_custom_type_script = "uid://wr5ur5dqrkni"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_nnriw")
@@ -59,12 +60,12 @@ text = "Info
 "
 script = ExtResource("4_85g3d")
 
-[node name="field" parent="." instance=ExtResource("5_choun")]
+[node name="field" parent="UI" instance=ExtResource("5_o6xl0")]
 
-[node name="Goal1" parent="field" instance=ExtResource("6_o6xl0")]
+[node name="Goal1" parent="UI/field" instance=ExtResource("6_o6xl0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.007, 3.217, -60.5)
 
-[node name="Goal2" parent="field" instance=ExtResource("6_o6xl0")]
+[node name="Goal2" parent="UI/field" instance=ExtResource("6_o6xl0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.007, 3.217, 60.5)
 
 [node name="Lights" type="Node3D" parent="."]

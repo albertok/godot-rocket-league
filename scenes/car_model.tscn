@@ -1,15 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://cylxynmfbbjwk"]
+[gd_scene load_steps=4 format=3 uid="uid://cylxynmfbbjwk"]
 
 [ext_resource type="PackedScene" uid="uid://mwlmhv68da6e" path="res://models/car.blend" id="1_bg842"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ifs7h"]
-cull_mode = 2
-albedo_color = Color(0.913096, 0.098798, 0, 1)
-metallic = 0.75
-roughness = 0.2
-clearcoat_enabled = true
+[ext_resource type="Material" uid="uid://b6yeasaavorsj" path="res://materials/car_paint.tres" id="2_ifs7h"]
+[ext_resource type="Material" uid="uid://d0ug2v7jto7a4" path="res://materials/car_window.tres" id="3_hhld5"]
 
 [node name="car" instance=ExtResource("1_bg842")]
 
 [node name="Car" parent="." index="0"]
-surface_material_override/0 = SubResource("StandardMaterial3D_ifs7h")
+surface_material_override/0 = ExtResource("2_ifs7h")
+surface_material_override/1 = ExtResource("3_hhld5")

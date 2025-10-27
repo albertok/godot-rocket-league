@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Physics Test"
 run/main_scene="res://scenes/main.tscn"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -25,6 +25,7 @@ NetworkTimeSynchronizer="*res://addons/netfox/network-time-synchronizer.gd"
 NetworkRollback="*res://addons/netfox/rollback/network-rollback.gd"
 NetworkEvents="*res://addons/netfox/network-events.gd"
 NetworkPerformance="*res://addons/netfox/network-performance.gd"
+NetworkSimulator="*res://addons/netfox.extras/network-simulator.gd"
 
 [editor_plugins]
 
@@ -75,10 +76,9 @@ jump={
 extras/auto_tile_windows=true
 extras/borderless=true
 extras/screen=1
-rollback/display_offset=1
 
 [physics]
 
-2d/physics_engine="Rapier2D"
+common/physics_jitter_fix=0.0
 3d/physics_engine="Jolt Physics"
-rapier/solver/max_ccd_substeps=4
+common/physics_interpolation=true

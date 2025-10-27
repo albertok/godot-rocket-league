@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://lxgmbbyk3nvi" path="res://scripts/player_rb.gd" id="1_35slv"]
 [ext_resource type="Script" uid="uid://d350u8evihs1u" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_1k5lo"]
-[ext_resource type="PackedScene" uid="uid://cylxynmfbbjwk" path="res://scenes/car_model.tscn" id="2_3k3na"]
+[ext_resource type="PackedScene" uid="uid://dtoa53rtwixhg" path="res://models/car.glb" id="2_athq8"]
 [ext_resource type="Script" uid="uid://cbmc5r8tb2ub7" path="res://scripts/input.gd" id="3_3k3na"]
 [ext_resource type="PackedScene" uid="uid://d2sn826pqsfs5" path="res://scenes/wheel.tscn" id="4_1k5lo"]
 [ext_resource type="Script" uid="uid://dour8fehaaugp" path="res://addons/netfox/tick-interpolator.gd" id="5_1k5lo"]
@@ -13,7 +13,7 @@ friction = 0.75
 bounce = 0.1
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dqkch"]
-size = Vector3(1.5, 0.5, 3)
+size = Vector3(1.5, 0.62646484, 3)
 
 [node name="Player" type="RigidBody3D"]
 collision_layer = 3
@@ -31,13 +31,13 @@ spring_strength = 100.0
 engine_power = 200.0
 steering_angle = 25.0
 front_tire_grip = 1.5
-metadata/_custom_type_script = ExtResource("1_35slv")
+metadata/_custom_type_script = "uid://lxgmbbyk3nvi"
 
-[node name="car_model" parent="." instance=ExtResource("2_3k3na")]
+[node name="car" parent="." instance=ExtResource("2_athq8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0643204, -0.231174)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00457764, 0.24968, 0.00256348)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00457764, 0.3129124, 0.00256348)
 shape = SubResource("BoxShape3D_dqkch")
 
 [node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
@@ -65,28 +65,32 @@ font_size = 60
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.291376, 1)
 enabled = false
 hit_from_inside = true
+metadata/_custom_type_script = "uid://c8tk028y8ex3g"
 
 [node name="FR_Wheel" parent="Wheels" instance=ExtResource("4_1k5lo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.291376, 1)
 enabled = false
 hit_from_inside = true
+metadata/_custom_type_script = "uid://c8tk028y8ex3g"
 
 [node name="RL_Wheel" parent="Wheels" instance=ExtResource("4_1k5lo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.291376, -1)
 enabled = false
 hit_from_inside = true
 is_front_wheel = false
+metadata/_custom_type_script = "uid://c8tk028y8ex3g"
 
 [node name="RR_Wheel" parent="Wheels" instance=ExtResource("4_1k5lo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.291376, -1)
 enabled = false
 hit_from_inside = true
 is_front_wheel = false
+metadata/_custom_type_script = "uid://c8tk028y8ex3g"
 
 [node name="TickInterpolator" type="Node" parent="." node_paths=PackedStringArray("root")]
 script = ExtResource("5_1k5lo")
 root = NodePath("..")
 properties = Array[String]([":global_transform"])
-metadata/_custom_type_script = ExtResource("5_1k5lo")
+metadata/_custom_type_script = "uid://dour8fehaaugp"
 
 [node name="Car_AI" parent="." instance=ExtResource("7_athq8")]
