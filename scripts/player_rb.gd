@@ -121,4 +121,5 @@ func _physics_rollback_tick(delta, _tick):
 	#If fallen on roof, roll over
 	roof_bounce.force_raycast_update()
 	if roof_bounce.is_colliding() and wheels_on_ground == 0:
-		apply_torque(Vector3(500,0,500))
+		var vehicles_rotation = global_transform.basis.z
+		apply_torque(vehicles_rotation * 800.0)

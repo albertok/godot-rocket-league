@@ -22,7 +22,6 @@ mass = 20.0
 physics_material_override = SubResource("PhysicsMaterial_athq8")
 center_of_mass_mode = 1
 center_of_mass = Vector3(0, -0.5, 0)
-inertia = Vector3(0, 0, 100)
 can_sleep = false
 continuous_cd = true
 linear_damp = 0.3

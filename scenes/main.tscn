@@ -25,7 +25,7 @@ ssr_enabled = true
 glow_enabled = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_85g3d"]
-size = Vector3(15.365, 7.25, 4)
+size = Vector3(15.365, 6, 4)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_choun"]
 transparency = 1
@@ -44,15 +44,6 @@ metadata/_custom_type_script = "uid://wr5ur5dqrkni"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_nnriw")
-
-[node name="Game" type="Node" parent="."]
-script = ExtResource("8_tipki")
-
-[node name="StateSynchronizer" type="Node" parent="Game" node_paths=PackedStringArray("root")]
-script = ExtResource("9_85g3d")
-root = NodePath("..")
-properties = Array[String]([":scores", ":kickoff_positions", ":kickoff_tick", ":kicking_off"])
-metadata/_custom_type_script = "uid://3lbngqcexe0l"
 
 [node name="Players" type="Node" parent="."]
 
@@ -172,7 +163,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -50)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.007, 3.217, -63.748993)
 
 [node name="BlueBox" type="MeshInstance3D" parent="field/Goal0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.6367207)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 1.637)
 mesh = SubResource("BoxMesh_85g3d")
 surface_material_override/0 = SubResource("StandardMaterial3D_choun")
 
@@ -180,9 +171,18 @@ surface_material_override/0 = SubResource("StandardMaterial3D_choun")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.007, 3.217, 60.5)
 
 [node name="RedBox" type="MeshInstance3D" parent="field/Goal1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.6367207)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 1.637)
 mesh = SubResource("BoxMesh_85g3d")
 surface_material_override/0 = SubResource("StandardMaterial3D_85g3d")
+
+[node name="Game" type="Node" parent="."]
+script = ExtResource("8_tipki")
+
+[node name="StateSynchronizer" type="Node" parent="Game" node_paths=PackedStringArray("root")]
+script = ExtResource("9_85g3d")
+root = NodePath("..")
+properties = Array[String]([":scores", ":kickoff_positions", ":kickoff_tick", ":kicking_off"])
+metadata/_custom_type_script = "uid://3lbngqcexe0l"
 
 [node name="Camera3D" type="Camera3D" parent="."]
 script = ExtResource("6_ya4ey")
