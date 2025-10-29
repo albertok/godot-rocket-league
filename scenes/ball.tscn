@@ -6,9 +6,11 @@
 [ext_resource type="Script" uid="uid://d350u8evihs1u" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="4_4dx81"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0xm2m"]
+friction = 0.7
 bounce = 0.7
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_0xm2m"]
+margin = 0.1
 radius = 1.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_0xm2m"]
@@ -17,7 +19,7 @@ height = 2.0
 
 [node name="Ball" type="RigidBody3D"]
 collision_layer = 4
-collision_mask = 5
+collision_mask = 3
 physics_material_override = SubResource("PhysicsMaterial_0xm2m")
 script = ExtResource("1_cxlvu")
 
@@ -32,10 +34,10 @@ surface_material_override/0 = ExtResource("3_4dx81")
 script = ExtResource("3_f7cbr")
 root = NodePath("..")
 properties = Array[String]([":global_position"])
-metadata/_custom_type_script = ExtResource("3_f7cbr")
+metadata/_custom_type_script = "uid://dour8fehaaugp"
 
 [node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
 script = ExtResource("4_4dx81")
 root = NodePath("..")
-state_properties = Array[String]([":physics_state"])
-metadata/_custom_type_script = ExtResource("4_4dx81")
+state_properties = Array[String]([":physics_state", ":entered_goal"])
+metadata/_custom_type_script = "uid://d350u8evihs1u"

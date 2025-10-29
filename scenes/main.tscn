@@ -1,12 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://deuo4hhrdtvai"]
+[gd_scene load_steps=13 format=3 uid="uid://deuo4hhrdtvai"]
 
 [ext_resource type="Script" uid="uid://c6j4p68pfwm0u" path="res://scripts/main.gd" id="1_tefeu"]
-[ext_resource type="Script" path="res://addons/netfox.extras/physics/godot_driver_3d.gd" id="2_tefeu"]
+[ext_resource type="Script" uid="uid://wr5ur5dqrkni" path="res://addons/netfox.extras/physics/godot_driver_3d.gd" id="2_tefeu"]
 [ext_resource type="PackedScene" uid="uid://dpm8cgj63eh0s" path="res://scenes/ball.tscn" id="3_tipki"]
 [ext_resource type="Script" uid="uid://bt0tpn5p32eym" path="res://scripts/ui_info.gd" id="4_85g3d"]
 [ext_resource type="PackedScene" uid="uid://blu8uqh0vbrhi" path="res://models/field.glb" id="5_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://bg5hxbj5ib07n" path="res://scenes/goal.tscn" id="6_o6xl0"]
 [ext_resource type="Script" uid="uid://btvo6f7sbrn0q" path="res://scripts/camera_3d.gd" id="6_ya4ey"]
+[ext_resource type="Script" uid="uid://c7wmmu5kvc8qq" path="res://scripts/game.gd" id="8_tipki"]
+[ext_resource type="Script" uid="uid://3lbngqcexe0l" path="res://addons/netfox/state-synchronizer.gd" id="9_85g3d"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bmvr6"]
 sky_top_color = Color(0.509202, 0.628864, 1, 1)
@@ -40,33 +42,42 @@ spawn_path = NodePath("../Players")
 
 [node name="Ball" parent="." instance=ExtResource("3_tipki")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.04389, 2.38114, 0)
-disable_mode = 2
 collision_mask = 13
 input_ray_pickable = false
-mass = 0.5
-continuous_cd = true
+mass = 0.4
 
-[node name="UI" type="Control" parent="."]
+[node name="TopCentre" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 96.0
+grow_horizontal = 2
+
+[node name="ScoreBoard" type="RichTextLabel" parent="TopCentre"]
+layout_mode = 0
+offset_left = 1.0
+offset_right = 1155.0
+offset_bottom = 113.0
+theme_override_font_sizes/normal_font_size = 61
+bbcode_enabled = true
+text = "0 : 0"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TopLeft" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 363.0
 offset_bottom = 363.0
 
-[node name="info" type="Label" parent="UI"]
+[node name="info" type="Label" parent="TopLeft"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 text = "Info
 "
 script = ExtResource("4_85g3d")
-
-[node name="field" parent="UI" instance=ExtResource("5_o6xl0")]
-
-[node name="Goal1" parent="UI/field" instance=ExtResource("6_o6xl0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.007, 3.217, -60.5)
-
-[node name="Goal2" parent="UI/field" instance=ExtResource("6_o6xl0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.007, 3.217, 60.5)
 
 [node name="Lights" type="Node3D" parent="."]
 
@@ -103,5 +114,25 @@ omni_range = 33.2662
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 49.8719, 0)
 
+[node name="field" parent="." instance=ExtResource("5_o6xl0")]
+
+[node name="Goal0" parent="field" instance=ExtResource("6_o6xl0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.007, 3.217, -63.748993)
+
+[node name="Goal1" parent="field" instance=ExtResource("6_o6xl0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.007, 3.217, 60.5)
+
 [node name="Camera3D" type="Camera3D" parent="."]
 script = ExtResource("6_ya4ey")
+
+[node name="Game" type="Node" parent="."]
+script = ExtResource("8_tipki")
+
+[node name="StateSynchronizer" type="Node" parent="Game" node_paths=PackedStringArray("root")]
+script = ExtResource("9_85g3d")
+root = NodePath("..")
+properties = Array[String]([":start_tick", ":scores"])
+metadata/_custom_type_script = "uid://3lbngqcexe0l"
+
+[connection signal="area_entered" from="field/Goal0" to="Ball" method="entered_goal_area"]
+[connection signal="area_entered" from="field/Goal1" to="Ball" method="entered_goal_area"]

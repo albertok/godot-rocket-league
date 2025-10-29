@@ -12,6 +12,5 @@ func _gather():
 		if ai_enabled:
 			motion = ai_motion
 		else:
-			var direction = Input.get_vector("left", "right", "down", "up")
-			motion = clamp(direction, Vector2(-1, -1), Vector2(1, 1))
+			motion = Input.get_vector("left", "right", "down", "up")
 			jumping = Input.is_action_pressed("jump")

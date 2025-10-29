@@ -44,3 +44,9 @@ func _tick(_delta: float, _t: int):
 
 		text += "\nRTT: %s " % _mean_rtt
 		text += "\nData - up: %s Kbps | down: %s Kbps" % [int(data_sent_rate * 0.008), int(data_received_rate * 0.008)]
+
+	# # View input submission status
+	# var players = get_tree().get_nodes_in_group("players")
+	# var submissions = NetworkRollback.get_input_submissions()
+	# for player in players:
+	# 	text += "\n%s - last input: %s - %s" % [player.name, submissions.get(player), NetworkRollback.has_input_for_tick(player, NetworkRollback.tick)]

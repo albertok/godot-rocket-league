@@ -10,19 +10,20 @@
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_athq8"]
 friction = 0.75
-bounce = 0.1
+bounce = 0.2
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dqkch"]
-size = Vector3(1.5, 0.62646484, 3)
+size = Vector3(1.75, 1, 3)
 
-[node name="Player" type="RigidBody3D"]
+[node name="Player" type="RigidBody3D" groups=["players"]]
 collision_layer = 3
 collision_mask = 3
 mass = 20.0
 physics_material_override = SubResource("PhysicsMaterial_athq8")
 center_of_mass_mode = 1
-center_of_mass = Vector3(0, -0.6, 0)
+center_of_mass = Vector3(0, -0.5, 0)
 inertia = Vector3(0, 0, 100)
+can_sleep = false
 continuous_cd = true
 linear_damp = 0.3
 angular_damp = 1.0
@@ -33,11 +34,11 @@ steering_angle = 25.0
 front_tire_grip = 1.5
 metadata/_custom_type_script = "uid://lxgmbbyk3nvi"
 
-[node name="car" parent="." instance=ExtResource("2_athq8")]
+[node name="Car_model" parent="." instance=ExtResource("2_athq8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0643204, -0.231174)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00457764, 0.3129124, 0.00256348)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_dqkch")
 
 [node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
@@ -62,26 +63,26 @@ font_size = 60
 [node name="Wheels" type="Node3D" parent="."]
 
 [node name="FL_Wheel" parent="Wheels" instance=ExtResource("4_1k5lo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.291376, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0.291376, 1)
 enabled = false
 hit_from_inside = true
 metadata/_custom_type_script = "uid://c8tk028y8ex3g"
 
 [node name="FR_Wheel" parent="Wheels" instance=ExtResource("4_1k5lo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.291376, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.75, 0.291376, 1)
 enabled = false
 hit_from_inside = true
 metadata/_custom_type_script = "uid://c8tk028y8ex3g"
 
 [node name="RL_Wheel" parent="Wheels" instance=ExtResource("4_1k5lo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.291376, -1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0.291376, -1)
 enabled = false
 hit_from_inside = true
 is_front_wheel = false
 metadata/_custom_type_script = "uid://c8tk028y8ex3g"
 
 [node name="RR_Wheel" parent="Wheels" instance=ExtResource("4_1k5lo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.291376, -1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.75, 0.291376, -1)
 enabled = false
 hit_from_inside = true
 is_front_wheel = false

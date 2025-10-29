@@ -31,6 +31,10 @@ NetworkSimulator="*res://addons/netfox.extras/network-simulator.gd"
 
 enabled=PackedStringArray("res://addons/netfox.extras/plugin.cfg", "res://addons/netfox.internals/plugin.cfg", "res://addons/netfox/plugin.cfg")
 
+[global_group]
+
+players=""
+
 [input]
 
 up={
@@ -79,6 +83,5 @@ extras/screen=1
 
 [physics]
 
-common/physics_jitter_fix=0.0
+common/max_physics_steps_per_frame=64
 3d/physics_engine="Jolt Physics"
-common/physics_interpolation=true
