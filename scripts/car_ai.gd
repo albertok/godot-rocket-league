@@ -9,7 +9,7 @@ const ALIGNMENT_THRESHOLD: float = 0.5
 
 # Stuff to get unstuck
 const STUCK_THRESHOLD: float = 0.2
-const STUCK_TIME: float = 3.0
+const STUCK_TIME: float = 4.0
 const REVERSE_DURATION: float = 0.5 #
 var last_position: Vector3 = Vector3()
 var stuck_timer: float = 0.0
@@ -61,9 +61,11 @@ func stuck_check(_delta) -> bool:
 		reverse_timer = REVERSE_DURATION
 	stuck_timer = min(stuck_timer, STUCK_TIME)
 
+	inputs.ai_jumping = false
 	if reverse_timer > 0.0:
 		reverse_timer -= _delta
 		inputs.ai_motion = Vector2(0, -1) # Reverse out
+		inputs.ai_jumping = true # Jump as well, why not.
 		return true
 
 	return false

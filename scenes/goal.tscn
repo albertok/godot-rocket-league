@@ -1,11 +1,23 @@
-[gd_scene load_steps=2 format=3 uid="uid://bg5hxbj5ib07n"]
+[gd_scene load_steps=4 format=3 uid="uid://bg5hxbj5ib07n"]
+
+[ext_resource type="Script" uid="uid://cau6jor3sbnjm" path="res://scripts/goal.gd" id="1_jbojv"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tefeu"]
-size = Vector3(15, 7, 1)
+size = Vector3(15, 7, 4.4282227)
 
-[node name="Goal1" type="StaticBody3D"]
+[sub_resource type="BoxMesh" id="BoxMesh_xl315"]
+size = Vector3(15.365, 7.25, 4)
+
+[node name="Area3D" type="Area3D"]
 collision_layer = 8
-collision_mask = 8
+collision_mask = 4
+script = ExtResource("1_jbojv")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.7141113)
 shape = SubResource("BoxShape3D_tefeu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.6367207)
+visible = false
+mesh = SubResource("BoxMesh_xl315")

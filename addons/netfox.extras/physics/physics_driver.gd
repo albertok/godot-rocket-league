@@ -13,9 +13,7 @@ var snapshots: Dictionary = {}
 # Snapshot and Rollback entire physics space.
 @export var rollback_physics_space: bool = true
 
-func _ready() -> void:
-	_init_physics_space()
-
+func _enter_tree():
 	#regular ticks
 	NetworkTime.before_tick.connect(before_tick)
 	NetworkTime.after_tick_loop.connect(after_tick_loop)
@@ -24,6 +22,18 @@ func _ready() -> void:
 	if rollback_physics_space:
 		NetworkRollback.on_prepare_tick.connect(on_prepare_tick)
 	NetworkRollback.on_process_tick.connect(on_process_tick)
+
+func _exit_tree():
+	NetworkTime.before_tick.disconnect(before_tick)
+	NetworkTime.after_tick_loop.disconnect(after_tick_loop)
+
+	#rollback ticks
+	if NetworkRollback.on_prepare_tick.is_connected(on_prepare_tick):
+		NetworkRollback.on_prepare_tick.disconnect(on_prepare_tick)
+	NetworkRollback.on_process_tick.disconnect(on_process_tick)
+
+func _ready() -> void:
+	_init_physics_space()
 
 # Emitted before a tick is run.
 func before_tick(_delta: float, tick: int) -> void:
@@ -42,7 +52,7 @@ func on_process_tick(_tick: int) -> void:
 	step_physics(NetworkTime.ticktime)
 		
 func after_tick_loop() -> void:
-	#remove old snapshots
+	# Remove old snapshots
 	for i in snapshots.keys():
 		if i < NetworkRollback.history_start:
 			snapshots.erase(i)
@@ -50,8 +60,9 @@ func after_tick_loop() -> void:
 func step_physics(_delta: float) -> void:
 	# Break up physics into smaller steps if needed
 	var frac_delta = _delta / physics_factor
+	var rollback_participants = get_tree().get_nodes_in_group("network_rigid_body")
 	for i in range(physics_factor):
-		for net_rigid_body in get_tree().get_nodes_in_group("network_rigid_body"):
+		for net_rigid_body in rollback_participants:
 			net_rigid_body._physics_rollback_tick(frac_delta, NetworkTime.tick)
 
 		_physics_step(frac_delta)

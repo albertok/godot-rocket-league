@@ -9,7 +9,7 @@ var scene_collision_objects: Array = []
 var collision_objects_snapshots: Dictionary[int, Dictionary] = {}
 
 func _init_physics_space() -> void:
-	physics_space = get_viewport().world_2D.space
+	physics_space = get_viewport().world_2d.space
 	PhysicsServer2D.space_set_active(physics_space, false)
 
 	get_tree().node_added.connect(node_added)
@@ -23,9 +23,11 @@ func _physics_step(delta) -> void:
 func _snapshot_space(tick: int) -> void:
 	var rid_states: Dictionary[RID, Array] = {}
 	for element in scene_collision_objects:
+		if element is CharacterBody2D:
+			element.force_update_transform() # force colliders to update
+		
 		var rid = element.get_rid()
 		rid_states[rid] = get_body_states(rid)
-
 	snapshots[tick] = rid_states
 
 func _rollback_space(tick) -> void:
@@ -33,6 +35,10 @@ func _rollback_space(tick) -> void:
 		var rid_states = snapshots[tick]
 		for rid in rid_states.keys():
 			set_body_states(rid, rid_states[rid])
+			
+		for body in scene_collision_objects:
+			if body is CharacterBody2D or body is AnimatableBody2D:
+				body.force_update_transform() # force colliders to update
 
 func get_body_states(rid: RID) -> Array:
 	var body_state: Array = [Vector3.ZERO, Quaternion.IDENTITY, Vector3.ZERO, Vector3.ZERO]

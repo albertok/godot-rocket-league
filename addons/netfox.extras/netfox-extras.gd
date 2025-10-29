@@ -6,7 +6,7 @@ const ROOT = "res://addons/netfox.extras"
 var SETTINGS = [
 	_NetfoxLogger.make_setting("netfox/logging/netfox_extras_log_level"),
 	
-	#Window Tiler Settings
+	# Window Tiler Settings
 	{
 		"name": "netfox/extras/auto_tile_windows",
 		"value": false,
@@ -22,13 +22,82 @@ var SETTINGS = [
 		"value": false,
 		"type": TYPE_BOOL
 	},
+	
+	# Autoconnect settings
+	{
+		"name": "netfox/autoconnect/enabled",
+		"value": false,
+		"type": TYPE_BOOL
+	},
+	{
+		"name": "netfox/autoconnect/host",
+		"value": "127.0.0.1",
+		"type": TYPE_STRING
+	},
+	{
+		"name": "netfox/autoconnect/port",
+		"value": 9999,
+		"type": TYPE_INT,
+		"hint": PROPERTY_HINT_RANGE,
+		"hint_string": "1,65535,hide_slider"
+	},
+	{
+		"name": "netfox/autoconnect/use_compression",
+		"value": false,
+		"type": TYPE_BOOL
+	},
+	{
+		"name": "netfox/autoconnect/simulated_latency_ms",
+		"value": 0.0,
+		"type": TYPE_INT,
+		"hint": PROPERTY_HINT_RANGE,
+		"hint_string": "0,200,or_greater"
+	},
+	{
+		"name": "netfox/autoconnect/simulated_packet_loss_chance",
+		"value": 0.0,
+		"type": TYPE_FLOAT,
+		"hint": PROPERTY_HINT_RANGE,
+		"hint_string": "0,1"
+	}
 ]
 
 const AUTOLOADS = [
 	{
 		"name": "WindowTiler",
 		"path": ROOT + "/window-tiler.gd"
+	},
+	{
+		"name": "NetworkSimulator",
+		"path": ROOT + "/network-simulator.gd"
 	}
+]
+
+const TYPES: Array[Dictionary] = [
+	{
+		"name": "RewindableStateMachine",
+		"base": "Node",
+		"script": ROOT + "/state-machine/rewindable-state-machine.gd",
+		"icon": ROOT + "/icons/rewindable-state-machine.svg"
+	},
+	{
+		"name": "RewindableState",
+		"base": "Node",
+		"script": ROOT + "/state-machine/rewindable-state.gd",
+		"icon": ROOT + "/icons/rewindable-state.svg"
+	},
+	{
+		"name": "NetworkRigidBody2D",
+		"base": "RigidBody2D",
+		"script": ROOT + "/physics/network-rigid-body-2d.gd",
+		"icon": ROOT + "/icons/network-rigid-body-2d.svg"
+	},
+	{
+		"name": "NetworkRigidBody3D",
+		"base": "RigidBody3D",
+		"script": ROOT + "/physics/network-rigid-body-3d.gd",
+		"icon": ROOT + "/icons/network-rigid-body-3d.svg"
+	},
 ]
 
 const PhysicsDriverToggles := preload("res://addons/netfox.extras/physics/physics-driver-toggles.gd")
@@ -41,6 +110,9 @@ func _enter_tree():
 
 	for autoload in AUTOLOADS:
 		add_autoload_singleton(autoload.name, autoload.path)
+	
+	for type in TYPES:
+		add_custom_type(type.name, type.base, load(type.script), load(type.icon))
 
 	_render_tool_menu()
 
@@ -51,6 +123,9 @@ func _exit_tree():
 
 	for autoload in AUTOLOADS:
 		remove_autoload_singleton(autoload.name)
+	
+	for type in TYPES:
+		remove_custom_type(type.name)
 
 	_free_tool_menu()
 
