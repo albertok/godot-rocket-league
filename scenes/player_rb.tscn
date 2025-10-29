@@ -44,7 +44,7 @@ shape = SubResource("BoxShape3D_dqkch")
 [node name="RollbackSynchronizer" type="Node" parent="." node_paths=PackedStringArray("root")]
 script = ExtResource("2_1k5lo")
 root = NodePath("..")
-state_properties = Array[String]([":physics_state", ":previous_spring_lengths"])
+state_properties = Array[String]([":physics_state", ":previous_spring_lengths", ":team"])
 input_properties = Array[String](["Input:motion", "Input:jumping"])
 
 [node name="Input" type="Node" parent="."]

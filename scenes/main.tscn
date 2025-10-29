@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://deuo4hhrdtvai"]
+[gd_scene load_steps=16 format=3 uid="uid://deuo4hhrdtvai"]
 
 [ext_resource type="Script" uid="uid://c6j4p68pfwm0u" path="res://scripts/main.gd" id="1_tefeu"]
 [ext_resource type="Script" uid="uid://wr5ur5dqrkni" path="res://addons/netfox.extras/physics/godot_driver_3d.gd" id="2_tefeu"]
@@ -24,6 +24,17 @@ tonemap_mode = 1
 ssr_enabled = true
 glow_enabled = true
 
+[sub_resource type="BoxMesh" id="BoxMesh_85g3d"]
+size = Vector3(15.365, 7.25, 4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_choun"]
+transparency = 1
+albedo_color = Color(0.15686275, 0.3764706, 0.9411765, 0.18431373)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_85g3d"]
+transparency = 1
+albedo_color = Color(0.98039216, 0, 0.15294118, 0.18431373)
+
 [node name="World" type="Node3D"]
 script = ExtResource("1_tefeu")
 
@@ -34,6 +45,15 @@ metadata/_custom_type_script = "uid://wr5ur5dqrkni"
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_nnriw")
 
+[node name="Game" type="Node" parent="."]
+script = ExtResource("8_tipki")
+
+[node name="StateSynchronizer" type="Node" parent="Game" node_paths=PackedStringArray("root")]
+script = ExtResource("9_85g3d")
+root = NodePath("..")
+properties = Array[String]([":scores", ":kickoff_positions", ":kickoff_tick", ":kicking_off"])
+metadata/_custom_type_script = "uid://3lbngqcexe0l"
+
 [node name="Players" type="Node" parent="."]
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
@@ -41,7 +61,7 @@ _spawnable_scenes = PackedStringArray("uid://stkxyqefx03l", "uid://rbhb1te77y2d"
 spawn_path = NodePath("../Players")
 
 [node name="Ball" parent="." instance=ExtResource("3_tipki")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.04389, 2.38114, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.381, 0)
 collision_mask = 13
 input_ray_pickable = false
 mass = 0.4
@@ -61,6 +81,19 @@ offset_bottom = 113.0
 theme_override_font_sizes/normal_font_size = 61
 bbcode_enabled = true
 text = "0 : 0"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CountDown" type="RichTextLabel" parent="TopCentre"]
+layout_mode = 0
+offset_left = 1.0
+offset_right = 1155.0
+offset_bottom = 338.0
+theme_override_font_sizes/normal_font_size = 61
+bbcode_enabled = true
+text = "
+"
 fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -114,25 +147,43 @@ omni_range = 33.2662
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 49.8719, 0)
 
+[node name="Markers" type="Node3D" parent="."]
+
+[node name="r1" type="Marker3D" parent="Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0.5, 20)
+
+[node name="r2" type="Marker3D" parent="Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0.5, 20)
+
+[node name="r3" type="Marker3D" parent="Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 50)
+
+[node name="b1" type="Marker3D" parent="Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0.5, -20)
+
+[node name="b2" type="Marker3D" parent="Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0.5, -20)
+
+[node name="b3" type="Marker3D" parent="Markers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -50)
+
 [node name="field" parent="." instance=ExtResource("5_o6xl0")]
 
 [node name="Goal0" parent="field" instance=ExtResource("6_o6xl0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.007, 3.217, -63.748993)
 
+[node name="BlueBox" type="MeshInstance3D" parent="field/Goal0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.6367207)
+mesh = SubResource("BoxMesh_85g3d")
+surface_material_override/0 = SubResource("StandardMaterial3D_choun")
+
 [node name="Goal1" parent="field" instance=ExtResource("6_o6xl0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.007, 3.217, 60.5)
 
+[node name="RedBox" type="MeshInstance3D" parent="field/Goal1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.6367207)
+mesh = SubResource("BoxMesh_85g3d")
+surface_material_override/0 = SubResource("StandardMaterial3D_85g3d")
+
 [node name="Camera3D" type="Camera3D" parent="."]
 script = ExtResource("6_ya4ey")
-
-[node name="Game" type="Node" parent="."]
-script = ExtResource("8_tipki")
-
-[node name="StateSynchronizer" type="Node" parent="Game" node_paths=PackedStringArray("root")]
-script = ExtResource("9_85g3d")
-root = NodePath("..")
-properties = Array[String]([":start_tick", ":scores"])
-metadata/_custom_type_script = "uid://3lbngqcexe0l"
-
-[connection signal="area_entered" from="field/Goal0" to="Ball" method="entered_goal_area"]
-[connection signal="area_entered" from="field/Goal1" to="Ball" method="entered_goal_area"]

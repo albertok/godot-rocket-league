@@ -9,7 +9,7 @@ const ALIGNMENT_THRESHOLD: float = 0.5
 
 # Stuff to get unstuck
 const STUCK_THRESHOLD: float = 0.2
-const STUCK_TIME: float = 3.0
+const STUCK_TIME: float = 4.0
 const REVERSE_DURATION: float = 0.5 #
 var last_position: Vector3 = Vector3()
 var stuck_timer: float = 0.0

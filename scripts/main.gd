@@ -45,6 +45,7 @@ func add_player(peer_id):
 	var player = player_scene.instantiate()
 	player.name = str(peer_id)
 	$Players.add_child(player)
+	player.team = multiplayer.get_peers().size() % 2
 
 	
 func connected():

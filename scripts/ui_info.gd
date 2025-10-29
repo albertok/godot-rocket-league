@@ -1,7 +1,11 @@
 extends Label
 
+var game : Game = null
+
 func _ready():
 	NetworkTime.on_tick.connect(_tick)
+	game = get_node("/root/World/Game")
+
 
 var data_sent_rate = 0.0
 var data_received_rate = 0.0
