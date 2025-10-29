@@ -95,3 +95,8 @@ properties = Array[String]([":global_transform"])
 metadata/_custom_type_script = "uid://dour8fehaaugp"
 
 [node name="Car_AI" parent="." instance=ExtResource("7_athq8")]
+
+[node name="RoofBounce" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9680519, 0)
+enabled = false
+target_position = Vector3(0, 0.5, 0)

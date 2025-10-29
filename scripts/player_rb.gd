@@ -30,6 +30,8 @@ var team_colors = [Color.RED, Color.BLUE]
 @onready var inputs: PlayerInput = $Input
 @onready var rollback_synchronizer: RollbackSynchronizer = $RollbackSynchronizer
 @onready var car_model: Node3D = $Car_model
+@onready var roof_bounce: RayCast3D = $RoofBounce
+
 var game: Game
 
 func _ready():
@@ -115,3 +117,8 @@ func _physics_rollback_tick(delta, _tick):
 	if wheels_on_ground > 2 and inputs.jumping:
 		var vehicles_up = global_transform.basis.y
 		apply_impulse(jump_force * vehicles_up, -vehicles_up)
+
+	#If fallen on roof, roll over
+	roof_bounce.force_raycast_update()
+	if roof_bounce.is_colliding() and wheels_on_ground == 0:
+		apply_torque(Vector3(500,0,500))
