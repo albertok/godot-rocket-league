@@ -26,6 +26,11 @@ NetworkRollback="*res://addons/netfox/rollback/network-rollback.gd"
 NetworkEvents="*res://addons/netfox/network-events.gd"
 NetworkPerformance="*res://addons/netfox/network-performance.gd"
 NetworkSimulator="*res://addons/netfox.extras/network-simulator.gd"
+RollbackSimulationServer="*res://addons/netfox/servers/rollback-simulation-server.gd"
+NetworkIdentityServer="*res://addons/netfox/servers/network-identity-server.gd"
+NetworkCommandServer="*res://addons/netfox/servers/network-command-server.gd"
+NetworkSynchronizationServer="*res://addons/netfox/servers/network-synchronization-server.gd"
+NetworkHistoryServer="*res://addons/netfox/servers/network-history-server.gd"
 
 [editor_plugins]
 
@@ -80,6 +85,9 @@ jump={
 extras/auto_tile_windows=true
 extras/borderless=true
 extras/screen=1
+logging/netfox_extras_log_level=3
+logging/log_level=3
+logging/netfox_log_level=3
 
 [physics]
 
