@@ -40,7 +40,7 @@ func _rollback_space(tick) -> void:
 
 
 func get_body_states(rid: RID) -> Array:
-	var body_state: Array = [Vector3.ZERO, Quaternion.IDENTITY, Vector3.ZERO, Vector3.ZERO]
+	var body_state: Array = [Transform3D.IDENTITY, Vector3.ZERO, Vector3.ZERO, false]
 	body_state[0] = PhysicsServer3D.body_get_state(rid, PhysicsServer3D.BODY_STATE_TRANSFORM)
 	body_state[1] = PhysicsServer3D.body_get_state(rid, PhysicsServer3D.BODY_STATE_LINEAR_VELOCITY)
 	body_state[2] = PhysicsServer3D.body_get_state(rid, PhysicsServer3D.BODY_STATE_ANGULAR_VELOCITY)
